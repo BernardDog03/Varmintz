@@ -49,4 +49,4 @@ MonoBehaviour:
   - {fileID: 201475363447848203, guid: 716c1a84481be01489d2da213096186d, type: 3}
   - {fileID: 201475363447848203, guid: 2d95da56997609c48b0d3055d7425a87, type: 3}
   - {fileID: 201475363447848203, guid: 8928fed5aecc15348a68af02fedb11d2, type: 3}
-  cactusProbability: 0.2
+  cactusProbability: 0.3

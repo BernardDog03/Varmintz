@@ -45,3 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilePrefabs: {fileID: 6795672223782017467, guid: 8eb318145a4bbe348b582e9dfd80e4b1, type: 3}
+  trainPrefabs: {fileID: 642687546997461907, guid: c94ffbd7e0dc1ab49adafddda5f9999f, type: 3}
+  minIntervalSpawn: 1
+  maxIntervalSpawn: 100

@@ -13,8 +13,12 @@ public class Character : MonoBehaviour
     [SerializeField] int backMoveLimit;
 
     public UnityEvent<Vector3> OnJumped;
+    public UnityEvent<int> OnGetCoin;
+    private bool isDie = false;
     void Update()
     {
+        if(isDie)return;
+        
         if (DOTween.IsTweening(transform)) return;
 
         Vector3 direction = Vector3.zero;
@@ -69,5 +73,22 @@ public class Character : MonoBehaviour
     private void BroadcastPositionJumped()
     {
         OnJumped.Invoke(transform.position);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Train"))
+        {
+            if(isDie == true)
+                return;
+
+            transform.DOScaleY(0.1f, 0.2f);
+
+            isDie = true;
+        }
+        else if(other.CompareTag("Coin"))
+        {
+            OnGetCoin.Invoke(1);
+        }
     }
 }

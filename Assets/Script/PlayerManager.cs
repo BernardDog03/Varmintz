@@ -15,8 +15,10 @@ public class PlayerManager : MonoBehaviour
 
     Dictionary<int, Terrain> activeTerrainDict = new Dictionary<int, Terrain>(20);
     [SerializeField] private int travelDistance;
+    [SerializeField] private int coin;
 
     public UnityEvent<int, int> OnUpdateTerrainLimit;
+    public UnityEvent <int> OnScoreUpdate;
 
     private void Start()
     {
@@ -100,7 +102,19 @@ public class PlayerManager : MonoBehaviour
         {
             travelDistance = Mathf.CeilToInt(targetPosition.z);
             UpdateTerrain();
+            OnScoreUpdate.Invoke(GetScore());
         }
+    }
+
+    public void AddCoin(int value = 1)
+    {
+        this.coin += value;
+        OnScoreUpdate.Invoke(GetScore());
+    }
+
+    private int GetScore()
+    {
+        return travelDistance + coin*3;
     }
 
     public void UpdateTerrain()
