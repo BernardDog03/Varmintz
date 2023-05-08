@@ -77,18 +77,12 @@ public class Character : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Train"))
-        {
-            if(isDie == true)
+        if(isDie == true)
                 return;
 
             transform.DOScaleY(0.1f, 0.2f);
 
             isDie = true;
-        }
-        else if(other.CompareTag("Coin"))
-        {
-            OnGetCoin.Invoke(1);
-        }
+        
     }
 }

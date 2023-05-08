@@ -114,7 +114,7 @@ public class PlayerManager : MonoBehaviour
 
     private int GetScore()
     {
-        return travelDistance + coin*3;
+        return travelDistance;
     }
 
     public void UpdateTerrain()
