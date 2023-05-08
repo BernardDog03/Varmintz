@@ -2,11 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.Events;
 
 public class Character : MonoBehaviour
 {
     [SerializeField, Range(0, 1)] float moveDuration = 0.1f;
     [SerializeField, Range(0, 1)] float jumpHeight = 0.5f;
+    [SerializeField] int leftMoveLimit;
+    [SerializeField] int rightMoveLimit;
+    [SerializeField] int backMoveLimit;
+
+    public UnityEvent<Vector3> OnJumped;
     void Update()
     {
         if (DOTween.IsTweening(transform)) return;
@@ -36,7 +42,32 @@ public class Character : MonoBehaviour
 
     public void Move(Vector3 direction)
     {
-        transform.DOJump(transform.position + direction, jumpHeight, 1, moveDuration);
+        var targetPosition = transform.position + direction;
+
+        if(targetPosition.x < leftMoveLimit 
+            ||targetPosition.x > rightMoveLimit 
+            ||targetPosition.z < backMoveLimit 
+            ||Obstacle.Position.Contains(targetPosition))
+            targetPosition = transform.position;
+
+        transform.DOJump(targetPosition,
+            jumpHeight,
+            1,
+            moveDuration)
+        .onComplete = BroadcastPositionJumped;
+        
         transform.forward = direction;
+    }
+
+    public void UpdateMoveLimit(int horizontalSize, int backLimit)
+    {
+        leftMoveLimit = -horizontalSize/2;
+        rightMoveLimit = horizontalSize/2;
+        backMoveLimit = backLimit;
+    }
+
+    private void BroadcastPositionJumped()
+    {
+        OnJumped.Invoke(transform.position);
     }
 }

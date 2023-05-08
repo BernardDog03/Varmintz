@@ -44,7 +44,10 @@ public class Land : Terrain
         var randomIndex = Random.Range(0, cactusPrefabsList.Count);
         var prefab = cactusPrefabsList[randomIndex];
 
-        var cactus = Instantiate(prefab, transform);
-        cactus.transform.localPosition = new Vector3(xPos, 0, 0);
+        var cactus = Instantiate(
+            prefab,
+            new Vector3(xPos, 0, z: this.transform.position.z),
+            Quaternion.identity,
+            transform);
     }
 }
